@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "gifterAPI",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authgifterc2e2d167",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

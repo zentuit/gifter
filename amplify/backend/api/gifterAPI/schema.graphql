@@ -1,0 +1,8 @@
+type Item @model @auth(rules: [{ allow: owner, queries: null, ownerField: "createdBy" }]) {
+  id: ID!
+  name: String!
+  description: String
+  url: String
+  createdBy: String
+}
+
