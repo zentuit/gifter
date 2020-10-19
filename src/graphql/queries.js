@@ -9,6 +9,9 @@ export const getItem = /* GraphQL */ `
       description
       url
       createdBy
+      selections {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -27,6 +30,37 @@ export const listItems = /* GraphQL */ `
         description
         url
         createdBy
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getSelection = /* GraphQL */ `
+  query GetSelection($id: ID!) {
+    getSelection(id: $id) {
+      id
+      createdBy
+      itemId
+      date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listSelections = /* GraphQL */ `
+  query ListSelections(
+    $filter: ModelSelectionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSelections(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        createdBy
+        itemId
+        date
         createdAt
         updatedAt
       }

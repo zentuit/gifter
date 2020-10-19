@@ -4,5 +4,14 @@ type Item @model @auth(rules: [{ allow: owner, queries: null, ownerField: "creat
   description: String
   url: String
   createdBy: String
+  selections: [Selection] @connection(keyName: "byItemByDate", fields:["id"])
 }
 
+type Selection @model @auth(rules: [{ allow: owner, ownerField: "createdBy" }]) 
+  @key(name: "byItemByDate", fields: ["itemId", "date"])
+{
+  id: ID!
+  createdBy: String
+  itemId: ID!
+  date: String!
+}

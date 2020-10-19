@@ -12,6 +12,9 @@ export const createItem = /* GraphQL */ `
       description
       url
       createdBy
+      selections {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -28,6 +31,9 @@ export const updateItem = /* GraphQL */ `
       description
       url
       createdBy
+      selections {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -44,6 +50,54 @@ export const deleteItem = /* GraphQL */ `
       description
       url
       createdBy
+      selections {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createSelection = /* GraphQL */ `
+  mutation CreateSelection(
+    $input: CreateSelectionInput!
+    $condition: ModelSelectionConditionInput
+  ) {
+    createSelection(input: $input, condition: $condition) {
+      id
+      createdBy
+      itemId
+      date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateSelection = /* GraphQL */ `
+  mutation UpdateSelection(
+    $input: UpdateSelectionInput!
+    $condition: ModelSelectionConditionInput
+  ) {
+    updateSelection(input: $input, condition: $condition) {
+      id
+      createdBy
+      itemId
+      date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteSelection = /* GraphQL */ `
+  mutation DeleteSelection(
+    $input: DeleteSelectionInput!
+    $condition: ModelSelectionConditionInput
+  ) {
+    deleteSelection(input: $input, condition: $condition) {
+      id
+      createdBy
+      itemId
+      date
       createdAt
       updatedAt
     }

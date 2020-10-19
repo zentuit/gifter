@@ -9,6 +9,9 @@ export const onCreateItem = /* GraphQL */ `
       description
       url
       createdBy
+      selections {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -22,6 +25,9 @@ export const onUpdateItem = /* GraphQL */ `
       description
       url
       createdBy
+      selections {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -35,6 +41,45 @@ export const onDeleteItem = /* GraphQL */ `
       description
       url
       createdBy
+      selections {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateSelection = /* GraphQL */ `
+  subscription OnCreateSelection($createdBy: String!) {
+    onCreateSelection(createdBy: $createdBy) {
+      id
+      createdBy
+      itemId
+      date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateSelection = /* GraphQL */ `
+  subscription OnUpdateSelection($createdBy: String!) {
+    onUpdateSelection(createdBy: $createdBy) {
+      id
+      createdBy
+      itemId
+      date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteSelection = /* GraphQL */ `
+  subscription OnDeleteSelection($createdBy: String!) {
+    onDeleteSelection(createdBy: $createdBy) {
+      id
+      createdBy
+      itemId
+      date
       createdAt
       updatedAt
     }
