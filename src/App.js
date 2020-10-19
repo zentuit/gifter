@@ -5,6 +5,11 @@ import { withAuthenticator } from 'aws-amplify-react'
 import Self from './pages/Self'
 import Selection from './pages/Selection'
 
+import Button from 'react-bootstrap/Button'
+import Container from 'react-bootstrap/Container'
+import Tabs from 'react-bootstrap/Tabs'
+import Tab from 'react-bootstrap/Tabs'
+
 
 function App() {
   const [page, updatePage] = useState('self')
@@ -33,18 +38,16 @@ function App() {
   }
 
   return (
-    <div>
-      <div className='header'>
-        <button onClick={onMyList}>My list</button>
-        <button onClick={onOthers}>Others' lists</button>
-      </div>
-      {
-        page === 'self' && (<Self user={user} />)
-      }
-      {
-        page === 'selections' && (<Selection user={user} />)
-      }
-    </div>
+    <Container>
+      <Tabs defaultActiveKey="self" id="tabs">
+        <Tab eventKey="self" title="My List">
+          <Self user={user} />
+        </Tab>
+        <Tab eventKey="selections" title="Other' Lists">
+          <Selection user={user} />
+        </Tab>
+      </Tabs>
+    </Container>
   );
 }
 

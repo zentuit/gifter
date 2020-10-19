@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer } from 'react'
 import { API, graphqlOperation } from 'aws-amplify'
+import Button from 'react-bootstrap/Button'
 
 import { createItem as CreateItem } from '../graphql/mutations'
 import { listItems as ListItems } from '../graphql/queries'
@@ -87,7 +88,7 @@ function Self({ user }) {
         onChange={onChange}
         value={state.url}
         placeholder='url' />
-      <button onClick={createItem}>Create Gift Item</button>
+      <Button onClick={createItem}>Create Gift Item</Button>
       <div>
       {
         state.items.map((item, index) => (
