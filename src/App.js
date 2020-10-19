@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { API, graphqlOperation, Auth } from 'aws-amplify'
+import { Auth } from 'aws-amplify'
 import { withAuthenticator } from 'aws-amplify-react'
 
-import { createItem as CreateItem } from './graphql/mutations'
-import { listItems as ListItems } from './graphql/queries'
-import { onCreateItem as OnCreateItem } from './graphql/subscriptions'
 import Self from './pages/Self'
 import Selection from './pages/Selection'
 
@@ -20,7 +17,6 @@ function App() {
   async function getUser() {
     try {
       const user = await Auth.currentAuthenticatedUser()
-      console.log('user: ', user)
       updateUser(user)
     } catch (error) {
       console.log('error finding user: ', error)
