@@ -1,9 +1,10 @@
 import React, { useEffect, useReducer } from 'react'
 import { API, graphqlOperation, Auth } from 'aws-amplify'
 
-import { createItem as CreateItem } from '../graphql/mutations'
+import { createSelection as CreateSelection } from '../graphql/mutations'
 import { listItems as ListItems } from '../graphql/custom-queries'
 import { onCreateItem as OnCreateItem } from '../graphql/subscriptions'
+import { onCreateSelection as OnCreateSelection } from '../graphql/subscriptions'
 
 const initialState = {
   name: '', description: '', url: '', items: []
@@ -13,15 +14,27 @@ function reducer(state, action) {
   console.log({ state, action });
   switch (action.type) {
     case 'SET_ITEMS':
-      return { ...state, items: action.items }
+      const groupedItems = action.items.reduce((accum, item) => {
+        const list = accum[item.createdBy] || []
+        list.push(item)
+        accum[item.createdBy] = list
+        return accum
+      }, {})
+      return { ...state, items: groupedItems }
     case 'SET_INPUT':
       return { ...state,  [action.key]: action.value }
     case 'CLEAR_INPUT':
       return { ...initialState, items: state.items }
     case 'ADD_ITEM':
-      console.log('Auth.user?.username: ', Auth.user?.username);
+      const othersItems = state.items[action.item.createdBy] || []
+      othersItems.push(action.item)
+      return { ...state, items: {...state.items, [action.item.createdBy]: othersItems} }
+    case 'ADD_SELECTION':
+      console.log({ action })
       if (action.item.createdBy === Auth.user?.username) return state
-      return { ...state, items: [...state.items, action.item] }
+
+      // return { ...state, items: [...state.items, action.item] }
+      return state
     case 'SET_USER':
       return { ...state, username: action.username }
     default:
@@ -35,13 +48,22 @@ function Selection({ user }) {
   useEffect(() => {
     console.log('useEffect: user: ', user)
     if (user) getData()
-    const subscription = API.graphql(graphqlOperation(OnCreateItem)).subscribe({
+    const itemSubscription = API.graphql(graphqlOperation(OnCreateItem)).subscribe({
       next: (eventData) => {
         const item = eventData.value.data.onCreateItem
         dispatch({ type: 'ADD_ITEM', item })
       }
     })
-    return () => subscription.unsubscribe()
+    const selectionSubscription = API.graphql(graphqlOperation(OnCreateSelection)).subscribe({
+      next: (eventData) => {
+        const item = eventData.value.data.onCreateSelection
+        dispatch({ type: 'ADD_SELECTION', item })
+      }
+    })
+    return () => {
+      itemSubscription.unsubscribe()
+      selectionSubscription.unsubscribe()
+    }
   }, [user])
 
   async function getData() {
@@ -60,40 +82,52 @@ function Selection({ user }) {
     }
   }
 
-  async function createItem() {
-    const { name, description, url } = state
-    if (name === '') return
+  async function createSelection() {
+    // const { name, description, url } = state
+    // if (name === '') return
 
-    const item = { name, description, url }
-    const items = [...state.items, item]
-    dispatch({ type: 'SET_ITEMS', items })
-    dispatch({ type: 'CLEAR_INPUT' })
+    // const item = { name, description, url }
+    // const items = [...state.items, item]
+    // dispatch({ type: 'SET_ITEMS', items })
+    // dispatch({ type: 'CLEAR_INPUT' })
 
-    try {
-      await API.graphql(graphqlOperation(CreateItem, { input: item }))
-      console.log('item created');
-    } catch (error) {
-      console.log('error creating item...', error);
-    }
+    // try {
+    //   await API.graphql(graphqlOperation(CreateSelection, { input: item }))
+    //   console.log('item created');
+    // } catch (error) {
+    //   console.log('error creating item...', error);
+    // }
   }
 
-  function onChange(e) {
-    dispatch({ type: 'SET_INPUT', key: e.target.name, value: e.target.value })
+  function onClick(e) {
+    console.log(e)
+    // dispatch({ type: 'SET_INPUT', key: e.target.name, value: e.target.value })
   }
+
+  const listOfItems = Object.keys(state.items).map(key => {
+    const list = state.items[key]
+    return (
+      <div key={key}>
+        <h2>{key}</h2>
+        {
+          list.map(item => (
+            <div key={item.id}>
+              <h3>{item.name}</h3>
+              <p>{item.description}</p>
+              <h5>{item.url}</h5>
+              <button>Select</button>
+            </div>
+          ))
+        }
+      </div>
+    )
+  })
 
   return (
     <div>
       <div>
       {
-        state.items.map((item, index) => (
-          <div key={index}>
-            <h2>{item.createdBy}</h2>
-            <h3>{item.name}</h3>
-            <p>{item.description}</p>
-            <h5>{item.url}</h5>
-            <button>Select</button>
-          </div>
-        ))
+        listOfItems
       }
       </div>
     </div>

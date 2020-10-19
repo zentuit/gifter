@@ -11,41 +11,41 @@
   }
 } )
 ## [Start] Applying Key Condition **
-#if( !$util.isNull($ctx.args.date) && !$util.isNull($ctx.args.date.beginsWith) )
+#if( !$util.isNull($ctx.args.createdBy) && !$util.isNull($ctx.args.createdBy.beginsWith) )
   #set( $query.expression = "$query.expression AND begins_with(#sortKey, :sortKey)" )
-  $util.qr($query.expressionNames.put("#sortKey", "date"))
-  $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.date.beginsWith" }))
+  $util.qr($query.expressionNames.put("#sortKey", "createdBy"))
+  $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.createdBy.beginsWith" }))
 #end
-#if( !$util.isNull($ctx.args.date) && !$util.isNull($ctx.args.date.between) )
+#if( !$util.isNull($ctx.args.createdBy) && !$util.isNull($ctx.args.createdBy.between) )
   #set( $query.expression = "$query.expression AND #sortKey BETWEEN :sortKey0 AND :sortKey1" )
-  $util.qr($query.expressionNames.put("#sortKey", "date"))
-  $util.qr($query.expressionValues.put(":sortKey0", { "S": "$ctx.args.date.between[0]" }))
-  $util.qr($query.expressionValues.put(":sortKey1", { "S": "$ctx.args.date.between[1]" }))
+  $util.qr($query.expressionNames.put("#sortKey", "createdBy"))
+  $util.qr($query.expressionValues.put(":sortKey0", { "S": "$ctx.args.createdBy.between[0]" }))
+  $util.qr($query.expressionValues.put(":sortKey1", { "S": "$ctx.args.createdBy.between[1]" }))
 #end
-#if( !$util.isNull($ctx.args.date) && !$util.isNull($ctx.args.date.eq) )
+#if( !$util.isNull($ctx.args.createdBy) && !$util.isNull($ctx.args.createdBy.eq) )
   #set( $query.expression = "$query.expression AND #sortKey = :sortKey" )
-  $util.qr($query.expressionNames.put("#sortKey", "date"))
-  $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.date.eq" }))
+  $util.qr($query.expressionNames.put("#sortKey", "createdBy"))
+  $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.createdBy.eq" }))
 #end
-#if( !$util.isNull($ctx.args.date) && !$util.isNull($ctx.args.date.lt) )
+#if( !$util.isNull($ctx.args.createdBy) && !$util.isNull($ctx.args.createdBy.lt) )
   #set( $query.expression = "$query.expression AND #sortKey < :sortKey" )
-  $util.qr($query.expressionNames.put("#sortKey", "date"))
-  $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.date.lt" }))
+  $util.qr($query.expressionNames.put("#sortKey", "createdBy"))
+  $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.createdBy.lt" }))
 #end
-#if( !$util.isNull($ctx.args.date) && !$util.isNull($ctx.args.date.le) )
+#if( !$util.isNull($ctx.args.createdBy) && !$util.isNull($ctx.args.createdBy.le) )
   #set( $query.expression = "$query.expression AND #sortKey <= :sortKey" )
-  $util.qr($query.expressionNames.put("#sortKey", "date"))
-  $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.date.le" }))
+  $util.qr($query.expressionNames.put("#sortKey", "createdBy"))
+  $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.createdBy.le" }))
 #end
-#if( !$util.isNull($ctx.args.date) && !$util.isNull($ctx.args.date.gt) )
+#if( !$util.isNull($ctx.args.createdBy) && !$util.isNull($ctx.args.createdBy.gt) )
   #set( $query.expression = "$query.expression AND #sortKey > :sortKey" )
-  $util.qr($query.expressionNames.put("#sortKey", "date"))
-  $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.date.gt" }))
+  $util.qr($query.expressionNames.put("#sortKey", "createdBy"))
+  $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.createdBy.gt" }))
 #end
-#if( !$util.isNull($ctx.args.date) && !$util.isNull($ctx.args.date.ge) )
+#if( !$util.isNull($ctx.args.createdBy) && !$util.isNull($ctx.args.createdBy.ge) )
   #set( $query.expression = "$query.expression AND #sortKey >= :sortKey" )
-  $util.qr($query.expressionNames.put("#sortKey", "date"))
-  $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.date.ge" }))
+  $util.qr($query.expressionNames.put("#sortKey", "createdBy"))
+  $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.createdBy.ge" }))
 #end
 ## [End] Applying Key Condition **
 {
@@ -72,5 +72,5 @@ $util.toJson($context.args.nextToken)
   #else
 null
   #end,
-  "index": "byItemByDate"
+  "index": "byItemBySelector"
 }

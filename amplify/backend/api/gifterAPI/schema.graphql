@@ -4,11 +4,11 @@ type Item @model @auth(rules: [{ allow: owner, queries: null, ownerField: "creat
   description: String
   url: String
   createdBy: String
-  selections: [Selection] @connection(keyName: "byItemByDate", fields:["id"])
+  selections: [Selection] @connection(keyName: "byItemBySelector", fields:["id"])
 }
 
-type Selection @model @auth(rules: [{ allow: owner, ownerField: "createdBy" }]) 
-  @key(name: "byItemByDate", fields: ["itemId", "date"])
+type Selection @model @auth(rules: [{ allow: owner, queries: null, ownerField: "createdBy" }]) 
+  @key(name: "byItemBySelector", fields: ["itemId", "createdBy"])
 {
   id: ID!
   createdBy: String

@@ -50,8 +50,8 @@ export const onDeleteItem = /* GraphQL */ `
   }
 `;
 export const onCreateSelection = /* GraphQL */ `
-  subscription OnCreateSelection($createdBy: String!) {
-    onCreateSelection(createdBy: $createdBy) {
+  subscription OnCreateSelection {
+    onCreateSelection {
       id
       createdBy
       itemId
@@ -62,8 +62,8 @@ export const onCreateSelection = /* GraphQL */ `
   }
 `;
 export const onUpdateSelection = /* GraphQL */ `
-  subscription OnUpdateSelection($createdBy: String!) {
-    onUpdateSelection(createdBy: $createdBy) {
+  subscription OnUpdateSelection {
+    onUpdateSelection {
       id
       createdBy
       itemId
@@ -74,8 +74,8 @@ export const onUpdateSelection = /* GraphQL */ `
   }
 `;
 export const onDeleteSelection = /* GraphQL */ `
-  subscription OnDeleteSelection($createdBy: String!) {
-    onDeleteSelection(createdBy: $createdBy) {
+  subscription OnDeleteSelection {
+    onDeleteSelection {
       id
       createdBy
       itemId

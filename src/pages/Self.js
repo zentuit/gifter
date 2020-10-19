@@ -1,9 +1,8 @@
 import React, { useEffect, useReducer } from 'react'
-import { API, graphqlOperation, Auth } from 'aws-amplify'
+import { API, graphqlOperation } from 'aws-amplify'
 
 import { createItem as CreateItem } from '../graphql/mutations'
 import { listItems as ListItems } from '../graphql/queries'
-import { onCreateItem as OnCreateItem } from '../graphql/subscriptions'
 
 const initialState = {
   name: '', description: '', url: '', username: '', items: []
