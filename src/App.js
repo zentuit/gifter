@@ -5,14 +5,12 @@ import { withAuthenticator } from 'aws-amplify-react'
 import Self from './pages/Self'
 import Selection from './pages/Selection'
 
-import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tabs'
 
 
 function App() {
-  const [page, updatePage] = useState('self')
   const [user, updateUser] = useState(null)
 
   useEffect(() => {
@@ -29,16 +27,8 @@ function App() {
     }
   }
 
-  function onMyList(e) {
-    updatePage('self')
-  }
-
-  function onOthers(e) {
-    updatePage('selections')
-  }
-
   return (
-    <Container>
+    <Container fluid>
       <Tabs defaultActiveKey="self" id="tabs">
         <Tab eventKey="self" title="My List">
           <Self user={user} />

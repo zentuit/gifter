@@ -1,6 +1,9 @@
 import React, { useEffect, useReducer } from 'react'
 import { API, graphqlOperation } from 'aws-amplify'
 import Button from 'react-bootstrap/Button'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 import { createItem as CreateItem } from '../graphql/mutations'
 import { listItems as ListItems } from '../graphql/queries'
@@ -72,35 +75,42 @@ function Self({ user }) {
   }
 
   return (
-    <div>
-      <input
-        name='name'
-        onChange={onChange}
-        value={state.name}
-        placeholder='name' />
-      <input
-        name='description'
-        onChange={onChange}
-        value={state.description}
-        placeholder='description' />
-      <input
-        name='url'
-        onChange={onChange}
-        value={state.url}
-        placeholder='url' />
-      <Button onClick={createItem}>Create Gift Item</Button>
-      <div>
+    <Container fluid>
       {
         state.items.map((item, index) => (
-          <div key={index}>
-            <h3>{item.name}</h3>
-            <p>{item.description}</p>
-            <h5>{item.url}</h5>
-          </div>
+          <Container fluid key={index}>
+            <Row>
+              <h3>{item.name}</h3>
+            </Row>
+            <Row>
+              {item.description}
+            </Row>
+            <Row>
+              <a href={item.url} target="_blank" rel="noopener noreferrer">{item.url}</a>
+            </Row>
+          </Container>
         ))
       }
-      </div>
-    </div>
+      <hr/>
+      <Row>
+        <input
+          name='name'
+          onChange={onChange}
+          value={state.name}
+          placeholder='name' />
+        <input
+          name='description'
+          onChange={onChange}
+          value={state.description}
+          placeholder='description' />
+        <input
+          name='url'
+          onChange={onChange}
+          value={state.url}
+          placeholder='url' />
+        <Button onClick={createItem}>Create Gift Item</Button>
+      </Row>
+    </Container>
   );
 }
 
