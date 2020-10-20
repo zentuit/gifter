@@ -36,6 +36,9 @@ function reducer(state, action) {
       return { ...state, items: groupedItems, mySelections }
     }
     case 'ADD_ITEM': {
+      if (action.item.createdBy === state.username) {
+        return state
+      }
       const othersItems = state.items[action.item.createdBy] || []
       othersItems.push(action.item)
       return { ...state, items: {...state.items, [action.item.createdBy]: othersItems} }
