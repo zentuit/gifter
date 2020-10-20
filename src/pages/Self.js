@@ -3,7 +3,6 @@ import { API, graphqlOperation } from 'aws-amplify'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 
 import { createItem as CreateItem } from '../graphql/mutations'
 import { listItems as ListItems } from '../graphql/queries'
