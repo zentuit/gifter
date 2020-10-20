@@ -105,6 +105,7 @@ function Selection({ user }) {
     const itemCreateSubscription = API.graphql(graphqlOperation(OnCreateItem)).subscribe({
       next: (eventData) => {
         const item = eventData.value.data.onCreateItem
+        item.selections = { items: [] }
         dispatch({ type: 'ADD_ITEM', item })
       }
     })
