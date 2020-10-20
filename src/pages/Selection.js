@@ -2,6 +2,8 @@ import React, { useEffect, useReducer } from 'react'
 import { API, graphqlOperation, Auth } from 'aws-amplify'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
+import Accordion from 'react-bootstrap/Accordion'
+import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import format from 'date-fns/format'
@@ -120,46 +122,49 @@ function Selection({ user }) {
     }
   }
 
+  let count = 0
   const listOfItems = Object.keys(state.items).map(key => {
     const list = state.items[key]
+    count++
     return (
-      <Container fluid key={key}>
-        <h2>{key}</h2>
-        {
-          list.map(item => {
-            let urlText = ''
-            if (item.url) {
-              urlText = (new URL(item.url)).hostname
+      <Card key={key}>
+        <Accordion.Toggle as={Card.Header} eventKey={count}>
+          {key}
+        </Accordion.Toggle>
+        <Accordion.Collapse eventKey={count}>
+          <Card.Body>
+            {
+              list.map(item => {
+                let urlText = ''
+                if (item.url) {
+                  urlText = (new URL(item.url)).hostname
+                }
+      
+                const buttonText = state.mySelections.includes(item.id) ? 'Deselect' : 'Select'
+                return (
+                  <Card key={item.id}>
+                    <Card.Body>
+                      <Card.Title>{item.name}</Card.Title>
+                      <Card.Subtitle><a href={item.url} target="_blank" rel="noopener noreferrer">{urlText}</a></Card.Subtitle>
+                      <Card.Text>{item.description}</Card.Text>
+                      <Button name={item.id} onClick={onClick}>{buttonText}</Button>
+                    </Card.Body>
+                  </Card>
+                )
+              })
             }
-  
-            const buttonText = state.mySelections.includes(item.id) ? 'Deselect' : 'Select'
-            return (
-              <Container fluid key={item.id}>
-                <Row>
-                  <Col xs={8}><h3>{item.name}</h3></Col>
-                  <Col xs={4}><Button name={item.id} onClick={onClick}>{buttonText}</Button></Col>
-                </Row>
-                <Row>
-                  <p>{item.description}</p>
-                </Row>            
-                <Row>
-                  <a href={item.url} target="_blank" rel="noopener noreferrer">{urlText}</a>
-                </Row>            
-                
-              </Container>
-            )
-          })
-        }
-      </Container>
+          </Card.Body>
+        </Accordion.Collapse>
+      </Card>
     )
   })
 
   return (
-    <Container fluid>
+    <Accordion>
       {
         listOfItems
       }
-    </Container>
+    </Accordion>
   );
 }
 
