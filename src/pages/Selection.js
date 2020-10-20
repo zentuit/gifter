@@ -34,10 +34,6 @@ function reducer(state, action) {
         return accum
       }, {})
       return { ...state, items: groupedItems, mySelections }
-    case 'SET_INPUT':
-      return { ...state,  [action.key]: action.value }
-    case 'CLEAR_INPUT':
-      return { ...initialState, items: state.items }
     case 'ADD_ITEM':
       const othersItems = state.items[action.item.createdBy] || []
       othersItems.push(action.item)
