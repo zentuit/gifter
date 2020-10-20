@@ -77,19 +77,26 @@ function Self({ user }) {
   return (
     <Container fluid>
       {
-        state.items.map((item, index) => (
-          <Container fluid key={index}>
-            <Row>
-              <h3>{item.name}</h3>
-            </Row>
-            <Row>
-              {item.description}
-            </Row>
-            <Row>
-              <a href={item.url} target="_blank" rel="noopener noreferrer">{item.url}</a>
-            </Row>
-          </Container>
-        ))
+        state.items.map((item, index) => {
+          let urlText = ''
+          if (item.url) {
+            urlText = (new URL(item.url)).hostname
+          }
+
+          return (
+            <Container fluid key={index}>
+              <Row>
+                <h3>{item.name}</h3>
+              </Row>
+              <Row>
+                {item.description}
+              </Row>
+              <Row>
+                <a href={item.url} target="_blank" rel="noopener noreferrer">{urlText}</a>
+              </Row>
+            </Container>
+          )
+        })
       }
       <hr/>
       <Row>
