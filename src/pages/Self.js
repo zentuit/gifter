@@ -85,7 +85,7 @@ function Self({ user }) {
 
           return (
             <Container fluid key={index}>
-              <Row>
+              <Row className="item-list-name">
                 <h3>{item.name}</h3>
               </Row>
               <Row>

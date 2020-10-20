@@ -9,6 +9,7 @@ import config from './aws-exports'
 
 import '@aws-amplify/ui/dist/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import './App.css'
 
 Amplify.configure(config)
 
